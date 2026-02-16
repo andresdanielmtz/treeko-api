@@ -4,12 +4,33 @@ Base URL: `http://localhost:8080`
 
 Authentication: JWT using `Authorization: Bearer <token>`.
 
+## Quick usage (curl)
+
+Register:
+
+```bash
+curl -s -X POST http://localhost:8080/api/auth/register \
+  -H 'Content-Type: application/json' \
+  -d '{"username":"autumn","email":"autumn@example.com","password":"password1234"}'
+```
+
+Create an expense (replace `<jwt>`):
+
+```bash
+curl -s -X POST http://localhost:8080/api/expenses \
+  -H 'Authorization: Bearer <jwt>' \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"Lunch","cost":14.50,"type":"PERSONAL"}'
+```
+
 ## Auth
 
 ### POST /api/auth/register
+
 Creates a new user and returns a JWT.
 
 Request JSON:
+
 ```json
 {
   "username": "autumn",
@@ -19,6 +40,7 @@ Request JSON:
 ```
 
 Response JSON:
+
 ```json
 {
   "token": "<jwt>",
@@ -27,9 +49,11 @@ Response JSON:
 ```
 
 ### POST /api/auth/login
+
 Logs in and returns a JWT.
 
 Request JSON:
+
 ```json
 {
   "username": "autumn",
@@ -38,6 +62,7 @@ Request JSON:
 ```
 
 Response JSON:
+
 ```json
 {
   "token": "<jwt>",
@@ -48,14 +73,17 @@ Response JSON:
 ## Users
 
 ### GET /api/users/me
+
 Returns the current authenticated user.
 
 Headers:
-```
+
+```text
 Authorization: Bearer <jwt>
 ```
 
 Response JSON:
+
 ```json
 {
   "id": 1,
@@ -67,20 +95,24 @@ Response JSON:
 ## Expenses
 
 Expense model:
+
 - `id`
 - `name` (optional)
 - `cost`
 - `type` (`PERSONAL`, `SCHOOL`, `WORK`, `OTHER`)
 
 ### GET /api/expenses
+
 List your expenses (most recent first).
 
 Headers:
-```
+
+```text
 Authorization: Bearer <jwt>
 ```
 
 Response JSON:
+
 ```json
 [
   {
@@ -93,14 +125,17 @@ Response JSON:
 ```
 
 ### GET /api/expenses/{id}
+
 Get a single expense (must belong to you).
 
 Headers:
-```
+
+```text
 Authorization: Bearer <jwt>
 ```
 
 Response JSON:
+
 ```json
 {
   "id": 12,
@@ -111,15 +146,18 @@ Response JSON:
 ```
 
 ### POST /api/expenses
+
 Create an expense.
 
 Headers:
-```
+
+```text
 Authorization: Bearer <jwt>
 Content-Type: application/json
 ```
 
 Request JSON:
+
 ```json
 {
   "name": "Textbook",
@@ -129,6 +167,7 @@ Request JSON:
 ```
 
 Response JSON (201):
+
 ```json
 {
   "id": 13,
@@ -139,15 +178,18 @@ Response JSON (201):
 ```
 
 ### PUT /api/expenses/{id}
+
 Replace an existing expense (must belong to you).
 
 Headers:
-```
+
+```text
 Authorization: Bearer <jwt>
 Content-Type: application/json
 ```
 
 Request JSON:
+
 ```json
 {
   "name": "Textbook (used)",
@@ -157,6 +199,7 @@ Request JSON:
 ```
 
 Response JSON:
+
 ```json
 {
   "id": 13,
@@ -167,10 +210,12 @@ Response JSON:
 ```
 
 ### DELETE /api/expenses/{id}
+
 Delete an expense (must belong to you).
 
 Headers:
-```
+
+```text
 Authorization: Bearer <jwt>
 ```
 
@@ -179,6 +224,7 @@ Response: `204 No Content`
 ## Errors
 
 Validation errors return `400`:
+
 ```json
 {
   "timestamp": "2026-02-16T00:00:00Z",
