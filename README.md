@@ -27,5 +27,5 @@ java -jar target/treeko-0.0.1-SNAPSHOT.jar
 
 Configuration:
 
-- Set `JWT_SECRET` in your host environment before starting the app.
+- Create a `.env` file (see `.env.example`) and set `JWT_SECRET` there.
 - Default port is `8080`.
